@@ -34,7 +34,11 @@ const CreatePost = () => {
       try {
         setGeneratingImg(true);
         setError('');
-        const response = await fetch('http://localhost:8080/api/v1/dalle', {
+        
+        // Get the base URL based on NODE_ENV
+        const baseUrl = import.meta.env.MODE === 'development' ? 'http://localhost:8080' : '';
+  
+        const response = await fetch(`${baseUrl}/api/v1/dalle`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -43,15 +47,15 @@ const CreatePost = () => {
             prompt: form.prompt,
           }),
         });
-
+  
         const data = await response.json();
-
+  
         if (!data.success) {
           setError(data.message);
           setGeneratingImg(false);
           return;
         }
-
+  
         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
       } catch (err) {
         alert(err);
@@ -65,18 +69,21 @@ const CreatePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:8080/api/v1/post', {
+        // Get the base URL based on NODE_ENV
+        const baseUrl = import.meta.env.MODE === 'development' ? 'http://localhost:8080' : '';
+  
+        const response = await fetch(`${baseUrl}/api/v1/post`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ ...form }),
         });
-
+  
         await response.json();
         alert('Success');
         navigate('/');
@@ -89,6 +96,7 @@ const CreatePost = () => {
       alert('Please generate an image with proper details');
     }
   };
+  
 
   return (
     <section className="max-w-7xl mx-auto">

@@ -22,15 +22,18 @@ const Home = () => {
 
   const fetchPosts = async () => {
     setLoading(true);
-
+  
     try {
-      const response = await fetch('http://localhost:8080/api/v1/post', {
+      // Get the base URL based on NODE_ENV
+      const baseUrl = import.meta.env.MODE === 'development' ? 'http://localhost:8080' : '';
+  
+      const response = await fetch(`${baseUrl}/api/v1/post`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         setAllPosts(result.data.reverse());
@@ -41,6 +44,7 @@ const Home = () => {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchPosts();
