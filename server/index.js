@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import connectDB from './mongodb/connect.js';
 import dalleRoutes from './routes/dalleRoutes.js'
 import postRoutes from './routes/postRoutes.js'
+import path from "path";
 
 dotenv.config()
 
@@ -14,6 +15,14 @@ app.use(express.urlencoded({ limit: "50mb", extended: true })); // Increase form
 
 app.use('/api/v1/dalle',dalleRoutes)
 app.use('/api/v1/post',postRoutes)
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "dist", "index.html"));
+  });
+}
 
 
 const startServer = async () => {
