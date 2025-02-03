@@ -5,7 +5,11 @@ import connectDB from './mongodb/connect.js';
 import dalleRoutes from './routes/dalleRoutes.js'
 import postRoutes from './routes/postRoutes.js'
 import path from "path";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config()
 
 const app=express();
