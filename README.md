@@ -25,6 +25,8 @@ https://artifexai.onrender.com
 
 -- **User-Centric Interface:** A clean, modern, and accessible UI designed for effortless navigation and a smooth user experience.
 
+ -- **Surprise Me:** Not sure what to write in the prompt? This feature will generate a random prompt for you.
+
 ## 🛠️ Tech Stack
 - **Frontend:** React.js, HTML5, CSS3, Tailwind CSS
 - **Backend:** Node.js, Express.js,
